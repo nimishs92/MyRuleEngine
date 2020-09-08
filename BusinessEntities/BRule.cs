@@ -18,10 +18,10 @@ namespace BusinessEntities
 
         public RuleAction RuleActionInstance;
 
-        public BRule(string Constant)
+        public BRule(string Constant, string Param)
         {
             this.ConstExpr = Expression.Constant(Constant, typeof(string));
-            this.ParamExpr = Expression.Parameter(typeof(string), "DummyParam");
+            this.ParamExpr = Expression.Parameter(typeof(string), Param);
 
         }
 

@@ -11,7 +11,9 @@ namespace MyRuleEngine
 
             RuleHandler ruleHandler = new RuleHandler();
             ruleHandler.InitializeRule();
-            ruleHandler.ExecuteRules();
+            Payment payment = new Payment();
+            payment.PaymentType = PaymentType.PHY_PROD;
+            ruleHandler.ExecuteRules(payment);
         }
     }
 }

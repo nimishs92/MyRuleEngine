@@ -11,19 +11,18 @@ namespace MyRuleEngine
         List<BRule> bRules = new List<BRule>();
         public void InitializeRule()
         {
-            BRule Rule = new BRule(PaymentType.PHY_PROD.ToString());
+            BRule Rule = new BRule(PaymentType.PHY_PROD.ToString(), new Payment().PaymentType.GetType().Name);
             Packaging packaging = new Packaging();
             Rule.RuleActionInstance += packaging.GeneratePackagingSlip;
             Rule.RuleActionInstance += packaging.CommissionToAgent;
             bRules.Add(Rule);
         }
 
-        public void ExecuteRules()
-        {
-            Payment payment = new Payment();
-            payment.PaymentType = PaymentType.PHY_PROD;
+        public void ExecuteRules(Payment payment)
+        {   
             foreach (var bRule in bRules)
             {
+                var value = payment.GetType().GetProperty(bRule.ParamExpr.Name).GetValue(payment).ToString();
                 if (bRule.EvaluateRule(payment.PaymentType.ToString()))
                 {
                     bRule.RuleActionInstance();
